@@ -128,7 +128,7 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 
 	client, err := vault.NewClient(config)
 	if err != nil {
-		return nil, errors.New("unable to initialize Vault client: %w", err)
+		return nil, errors.New(fmt.Sprintf("unable to initialize Vault client: %w", err))
 	}
 
 	switch authMethod {
@@ -160,7 +160,7 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 			return nil, err
 		}
 		if authInfo == nil {
-			log.Fatal("no auth info was returned after login")
+			return nil, errors.New("no auth info was returned after login")
 		}
 
 		s.vaultToken = authInfo.Auth.ClientToken
@@ -171,12 +171,12 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 			awsAuth.WithRole(awsIamRole), // if not provided, Vault will fall back on looking for a role with the IAM role name if you're using the iam auth type, or the EC2 instance's AMI id if using the ec2 auth type
 		)
 		if err != nil {
-			return nil, errors.New("unable to initialize AWS auth method: %w", err)
+			return nil, errors.New(fmt.Sprintf("unable to initialize AWS auth method: %w", err))
 		}
 
 		authInfo, err := client.Auth().Login(context.Background(), aws)
 		if err != nil {
-			return nil, errors.New("unable to login to AWS auth method: %w", err)
+			return nil, errors.New(fmt.Sprintf("unable to login to AWS auth method: %w", err))
 		}
 		if authInfo == nil {
 			return nil, errors.New("no auth info was returned after login")
@@ -189,12 +189,12 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 			awsAuth.WithEC2Auth(), // if not provided, Vault will fall back on looking for a role with the IAM role name if you're using the iam auth type, or the EC2 instance's AMI id if using the ec2 auth type
 		)
 		if err != nil {
-			return nil, errors.New("unable to initialize AWS auth method: %w", err)
+			return nil, errors.New(fmt.Sprintf("unable to initialize AWS auth method: %w", err))
 		}
 
 		authInfo, err := client.Auth().Login(context.Background(), aws)
 		if err != nil {
-			return nil, errors.New("unable to login to AWS auth method: %w", err)
+			return nil, errors.New(fmt.Sprintf("unable to login to AWS auth method: %w", err))
 		}
 		if authInfo == nil {
 			return nil, errors.New("no auth info was returned after login")
@@ -203,7 +203,7 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 		break
 	}
 
-	client.setToken(s.vaultToken)
+	client.SetToken(s.vaultToken)
 	kvPath := url.Query().Get("kv_path")
 	secretPath := url.Query().Get("secret_path")
 	kvKey := url.Query().Get("kv_key")
@@ -214,14 +214,14 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 	// get secret from the default mount path for KV v2 in dev mode, "secret"
 	secret, err := client.KVv2(kvPath).Get(context.Background(), secretPath)
 	if err != nil {
-		return nil, errors.New("unable to read secret: %w", err)
+		return nil, errors.New(fmt.Sprintf("unable to read secret: %w", err))
 	}
 
 	// data map can contain more than one key-value pair,
 	// in this case we're just grabbing one of them
 	value, ok := secret.Data[kvKey].(string)
 	if !ok {
-		return nil, errors.New("value type assertion failed: %T %#v", secret.Data[kvKey], secret.Data[kvKey])
+		return nil, errors.New(fmt.Sprintf("value type assertion failed: %T %#v", secret.Data[kvKey], secret.Data[kvKey]))
 	}
 
 	return []byte(value), nil
