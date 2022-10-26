@@ -17,11 +17,11 @@ import (
 	"context"
 	"testing"
 
+	"github.com/bliiitz/go-majordomo"
+	"github.com/bliiitz/go-majordomo/confidants/direct"
+	"github.com/bliiitz/go-majordomo/standard"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
-	"github.com/wealdtech/go-majordomo"
-	"github.com/wealdtech/go-majordomo/confidants/direct"
-	"github.com/wealdtech/go-majordomo/standard"
 )
 
 func TestFetch(t *testing.T) {

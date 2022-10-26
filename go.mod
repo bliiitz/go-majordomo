@@ -1,4 +1,4 @@
-module github.com/wealdtech/go-majordomo
+module github.com/bliiitz/go-majordomo
 
 go 1.14
 
@@ -6,6 +6,8 @@ require (
 	cloud.google.com/go v0.103.0 // indirect
 	cloud.google.com/go/secretmanager v1.5.0
 	github.com/aws/aws-sdk-go v1.44.81
+	github.com/hashicorp/vault/api v1.8.1 // indirect
+	github.com/hashicorp/vault/api/auth/aws v0.3.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.27.0

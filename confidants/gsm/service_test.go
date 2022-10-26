@@ -19,11 +19,11 @@ import (
 	"os"
 	"testing"
 
+	"github.com/bliiitz/go-majordomo"
+	"github.com/bliiitz/go-majordomo/confidants/gsm"
+	"github.com/bliiitz/go-majordomo/standard"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
-	"github.com/wealdtech/go-majordomo"
-	"github.com/wealdtech/go-majordomo/confidants/gsm"
-	"github.com/wealdtech/go-majordomo/standard"
 	"gotest.tools/assert"
 )
 

@@ -20,11 +20,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/bliiitz/go-majordomo"
+	httpconfidant "github.com/bliiitz/go-majordomo/confidants/http"
+	"github.com/bliiitz/go-majordomo/standard"
+	"github.com/bliiitz/go-majordomo/testing/logger"
 	"github.com/stretchr/testify/require"
-	"github.com/wealdtech/go-majordomo"
-	httpconfidant "github.com/wealdtech/go-majordomo/confidants/http"
-	"github.com/wealdtech/go-majordomo/standard"
-	"github.com/wealdtech/go-majordomo/testing/logger"
 )
 
 func TestFetch(t *testing.T) {

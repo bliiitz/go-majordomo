@@ -19,10 +19,10 @@ import (
 	"net/url"
 	"strings"
 
+	majordomo "github.com/bliiitz/go-majordomo"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
 	zerologger "github.com/rs/zerolog/log"
-	majordomo "github.com/wealdtech/go-majordomo"
 )
 
 // Service is the standard majordomo service.

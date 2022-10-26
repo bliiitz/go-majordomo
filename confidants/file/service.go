@@ -19,10 +19,10 @@ import (
 	"net/url"
 	"os"
 
+	"github.com/bliiitz/go-majordomo"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
 	zerologger "github.com/rs/zerolog/log"
-	"github.com/wealdtech/go-majordomo"
 )
 
 // Service returns the values from the filesystem.

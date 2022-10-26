@@ -23,10 +23,10 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/bliiitz/go-majordomo"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
 	zerologger "github.com/rs/zerolog/log"
-	"github.com/wealdtech/go-majordomo"
 )
 
 // Service returns the values from an HTTP connection.

@@ -18,10 +18,10 @@ import (
 	"net/url"
 	"testing"
 
+	majordomo "github.com/bliiitz/go-majordomo"
+	"github.com/bliiitz/go-majordomo/standard"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
-	majordomo "github.com/wealdtech/go-majordomo"
-	"github.com/wealdtech/go-majordomo/standard"
 )
 
 func TestFetch(t *testing.T) {

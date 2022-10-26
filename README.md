@@ -1,11 +1,11 @@
 # go-majordomo
 
-[![Tag](https://img.shields.io/github/tag/wealdtech/go-majordomo.svg)](https://github.com/wealdtech/go-majordomo/releases/)
+[![Tag](https://img.shields.io/github/tag/wealdtech/go-majordomo.svg)](https://github.com/bliiitz/go-majordomo/releases/)
 [![License](https://img.shields.io/github/license/wealdtech/go-majordomo.svg)](LICENSE)
-[![GoDoc](https://godoc.org/github.com/wealdtech/go-majordomo?status.svg)](https://godoc.org/github.com/wealdtech/go-majordomo)
+[![GoDoc](https://godoc.org/github.com/bliiitz/go-majordomo?status.svg)](https://godoc.org/github.com/bliiitz/go-majordomo)
 [![Travis CI](https://img.shields.io/travis/wealdtech/go-majordomo.svg)](https://travis-ci.org/wealdtech/go-majordomo)
 [![codecov.io](https://img.shields.io/codecov/c/github/wealdtech/go-majordomo.svg)](https://codecov.io/github/wealdtech/go-majordomo)
-[![Go Report Card](https://goreportcard.com/badge/github.com/wealdtech/go-majordomo)](https://goreportcard.com/report/github.com/wealdtech/go-majordomo)
+[![Go Report Card](https://goreportcard.com/badge/github.com/bliiitz/go-majordomo)](https://goreportcard.com/report/github.com/bliiitz/go-majordomo)
 
 Central access to resources, locally or from secret managers.
 
@@ -23,7 +23,7 @@ Central access to resources, locally or from secret managers.
 `go-majordomo` is a standard Go module which can be installed with:
 
 ```sh
-go get github.com/wealdtech/go-majordomo
+go get github.com/bliiitz/go-majordomo
 ```
 
 ## Usage
@@ -51,8 +51,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/wealdtech/go-majordomo/confidants/file"
-	standardmajordomo "github.com/wealdtech/go-majordomo/standard"
+	"github.com/bliiitz/go-majordomo/confidants/file"
+	standardmajordomo "github.com/bliiitz/go-majordomo/standard"
 )
 
 func main() {
@@ -88,7 +88,7 @@ Jim McDonald: [@mcdee](https://github.com/mcdee).
 
 ## Contribute
 
-Contributions welcome. Please check out [the issues](https://github.com/wealdtech/go-majordomo/issues).
+Contributions welcome. Please check out [the issues](https://github.com/bliiitz/go-majordomo/issues).
 
 ## License
 
