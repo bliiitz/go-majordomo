@@ -97,8 +97,8 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 		return nil, errors.New("no vault module specified")
 	}
 
-	if module != "kv" && module != "pki" {
-		return nil, errors.New("unknown vault module. Only (kv|pki) are allowed")
+	if module != "/kv" && module != "/pki" {
+		return nil, errors.New(fmt.Sprintf("unknown vault module. Only (kv|pki) are allowed. Got %s", module))
 	}
 
 	authMethod := url.Query().Get("auth_method")
@@ -107,7 +107,7 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 	}
 
 	if authMethod != "kubernetes" && authMethod != "aws_iam_role" && authMethod != "aws_ec2" {
-		return nil, errors.New("unknown vault auth method. Only (kubernetes|aws_iam_role|aws_ec2) are allowed")
+		return nil, errors.New(fmt.Sprintf("unknown vault auth method. Only (kubernetes|aws_iam_role|aws_ec2) are allowed. Got %s", authMethod))
 	}
 
 	authPath := url.Query().Get("auth_path")
