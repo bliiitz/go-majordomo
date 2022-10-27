@@ -75,6 +75,13 @@ func (s *Service) SupportedURLSchemes(ctx context.Context) ([]string, error) {
 // Fetch fetches a value given its key.
 func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 
+	secretKey := url.String()
+	if val, ok := s.credentialsCache[secretKey]; ok {
+		if ok {
+			return []byte(val), nil
+		}
+	}
+
 	host := url.Host
 	if host == "" {
 		return nil, errors.New("no vault specified")
@@ -224,5 +231,6 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 		return nil, errors.New(fmt.Sprintf("value type assertion failed: %T %#v", secret.Data[kvKey], secret.Data[kvKey]))
 	}
 
+	s.credentialsCache[secretKey] = value
 	return []byte(value), nil
 }
