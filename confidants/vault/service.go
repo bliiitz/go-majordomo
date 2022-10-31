@@ -79,9 +79,14 @@ func (s *Service) SupportedURLSchemes(ctx context.Context) ([]string, error) {
 func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 	secretKey := url.String()
 
+	fmt.Printf("[vault-confident] access to %s ", secretKey)
+
 	if val, ok := s.credentialsLoading[secretKey]; ok {
+		fmt.Printf("[vault-confident] key (%s) exists: %b", secretKey, ok)
 		if ok {
+			fmt.Printf("[vault-confident] key (%s) alorady loading: %b", secretKey, val)
 			if val {
+				fmt.Printf("[vault-confident] key (%s) waiting for previous loading", secretKey, val)
 				for {
 					if loading, ok := s.credentialsLoading[secretKey]; ok {
 						if !loading {
@@ -89,17 +94,21 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 						}
 					}
 				}
+				fmt.Printf("[vault-confident] key (%s) previous loading ended", secretKey, val)
 			}
 		}
 	}
 
+	s.credentialsLoading[secretKey] = true
+
 	if val, ok := s.credentialsCache[secretKey]; ok {
+		fmt.Printf("[vault-confident] key (%s) exists in cache: %b ", secretKey, ok)
 		if ok {
+			fmt.Printf("[vault-confident] key (%s) return ", secretKey)
+			s.credentialsLoading[secretKey] = false
 			return []byte(val), nil
 		}
 	}
-
-	s.credentialsLoading[secretKey] = true
 
 	host := url.Host
 	if host == "" {
@@ -255,5 +264,6 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 
 	s.credentialsCache[secretKey] = value
 	s.credentialsLoading[secretKey] = false
+	fmt.Printf("[vault-confident] key (%s) return and cached ", secretKey)
 	return []byte(value), nil
 }
