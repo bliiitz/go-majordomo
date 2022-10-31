@@ -35,8 +35,9 @@ import (
 // If both are supplied URLs are of the form "asm:///secret".
 // Any provision of ID and secret or of region will override the defaults.
 type Service struct {
-	credentialsCache map[string]string
-	vaultToken       string
+	credentialsCache   map[string]string
+	credentialsLoading map[string]bool
+	vaultToken         string
 }
 
 // module-wide log.
@@ -74,13 +75,29 @@ func (s *Service) SupportedURLSchemes(ctx context.Context) ([]string, error) {
 
 // Fetch fetches a value given its key.
 func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
-
 	secretKey := url.String()
+
+	if val, ok := s.credentialsLoading[secretKey]; ok {
+		if ok {
+			if val {
+				for {
+					if loading, ok := s.credentialsLoading[secretKey]; ok {
+						if !loading {
+							break
+						}
+					}
+				}
+			}
+		}
+	}
+
 	if val, ok := s.credentialsCache[secretKey]; ok {
 		if ok {
 			return []byte(val), nil
 		}
 	}
+
+	s.credentialsLoading[secretKey] = true
 
 	host := url.Host
 	if host == "" {
@@ -235,5 +252,6 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 	}
 
 	s.credentialsCache[secretKey] = value
+	s.credentialsLoading[secretKey] = false
 	return []byte(value), nil
 }
