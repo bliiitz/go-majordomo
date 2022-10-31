@@ -173,9 +173,10 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 		s.vaultToken = authInfo.Auth.ClientToken
 		break
 	case "aws_iam_role":
-		awsIamRole := url.Query().Get("aws_iam_role")
+		awsRole := url.Query().Get("aws_auth_role")
 		aws, err := awsAuth.NewAWSAuth(
-			awsAuth.WithRole(awsIamRole), // if not provided, Vault will fall back on looking for a role with the IAM role name if you're using the iam auth type, or the EC2 instance's AMI id if using the ec2 auth type
+			awsAuth.WithRole(awsRole), // if not provided, Vault will fall back on looking for a role with the IAM role name if you're using the iam auth type, or the EC2 instance's AMI id if using the ec2 auth type
+
 		)
 		if err != nil {
 			return nil, errors.New(fmt.Sprintf("unable to initialize AWS auth method: %w", err))
@@ -192,8 +193,10 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 		s.vaultToken = authInfo.Auth.ClientToken
 		break
 	case "aws_ec2":
+		awsRole := url.Query().Get("aws_auth_role")
 		aws, err := awsAuth.NewAWSAuth(
 			awsAuth.WithEC2Auth(), // if not provided, Vault will fall back on looking for a role with the IAM role name if you're using the iam auth type, or the EC2 instance's AMI id if using the ec2 auth type
+			awsAuth.WithRole(awsRole),
 		)
 		if err != nil {
 			return nil, errors.New(fmt.Sprintf("unable to initialize AWS auth method: %w", err))
