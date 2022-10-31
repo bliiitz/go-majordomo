@@ -57,8 +57,10 @@ func New(ctx context.Context, params ...Parameter) (*Service, error) {
 	}
 
 	cache := make(map[string]string)
+	loading := make(map[string]bool)
 	s := &Service{
-		credentialsCache: cache,
+		credentialsCache:   cache,
+		credentialsLoading: loading,
 	}
 
 	return s, nil
