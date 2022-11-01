@@ -79,14 +79,14 @@ func (s *Service) SupportedURLSchemes(ctx context.Context) ([]string, error) {
 func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 	secretKey := url.String()
 
-	fmt.Printf("[vault-confident] access to %s ", secretKey)
+	log.Printf("[vault-confident] access to %s ", secretKey)
 
 	if val, ok := s.credentialsLoading[secretKey]; ok {
-		fmt.Printf("[vault-confident] key (%s) exists: %b", secretKey, ok)
+		log.Printf("[vault-confident] key (%s) exists: %b", secretKey, ok)
 		if ok {
-			fmt.Printf("[vault-confident] key (%s) alorady loading: %b", secretKey, val)
+			log.Printf("[vault-confident] key (%s) alorady loading: %b", secretKey, val)
 			if val {
-				fmt.Printf("[vault-confident] key (%s) waiting for previous loading", secretKey, val)
+				log.Printf("[vault-confident] key (%s) waiting for previous loading", secretKey, val)
 				for {
 					if loading, ok := s.credentialsLoading[secretKey]; ok {
 						if !loading {
