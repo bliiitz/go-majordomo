@@ -238,6 +238,7 @@ func (s *Service) Fetch(ctx context.Context, url *url.URL) ([]byte, error) {
 			return nil, errors.New("no auth info was returned after login")
 		}
 
+		s.vaultToken = authInfo.Auth.ClientToken
 		break
 	}
 
